@@ -7,6 +7,12 @@ public class PlayerControl : MonoBehaviour {
     public float speed;
     Rigidbody2D rBody;
     public Boundry boundry = new Boundry();
+    public Transform laserSpawn;
+    public GameObject laser;
+
+    public float fireDelta = 0.5f;
+    private float nextFire = 0.5f;
+    private float myTime = 0.5f;
 
     [System.Serializable]
     public class Boundry
@@ -33,6 +39,12 @@ public class PlayerControl : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-		
+        myTime += Time.deltaTime;
+
+        if (Input.GetButton("Fire1") && myTime > nextFire)
+        {
+            Instantiate(laser, laserSpawn.position, laserSpawn.rotation);
+            myTime = 0;
+        }
 	}
 }
