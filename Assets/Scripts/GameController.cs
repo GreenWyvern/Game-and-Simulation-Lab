@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
 
@@ -11,11 +12,15 @@ public class GameController : MonoBehaviour {
     public float spawnTem;
     public float startTem;
     public float waveTem;
+    public TextMesh textScore;
+    public TextMesh textGO;
+    public TextMesh textRestart;
     #endregion
 
     #region private stuff
     private int score;
     private bool gameOver = false;
+    private bool restart;
     #endregion
 
 
@@ -25,13 +30,29 @@ public class GameController : MonoBehaviour {
         gameOver = false;
         score = 0;
 
+        UpdateScore();
+        textGO.text = "";
+        textRestart.text = "";
+
         StartCoroutine(SpawnWaves());
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        if (restart)
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                //Application.LoadLevel(Application.loadedLevel);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            //Application.LoadLevel(Application.loadedLevel);
+            Application.Quit();
+        }
+    }
 
     IEnumerator SpawnWaves()
     {
@@ -60,18 +81,20 @@ public class GameController : MonoBehaviour {
 
     void UpdateScore()
     {
-
+        textScore.text = ("Score\n*" + score + "*");
     }
 
     public void GameOver()
     {
         gameOver = true;
+        textGO.text = "GAME OVER";
+        textRestart.text = "Press 'R' to restart, scrub.";
+        restart = true;
     }
 
     public void AddScore(int addVal)
     {
         score += addVal;
         UpdateScore();
-        Debug.Log(score);
     }
 }

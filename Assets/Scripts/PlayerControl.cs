@@ -45,6 +45,7 @@ public class PlayerControl : MonoBehaviour {
         {
             Instantiate(laser, laserSpawn.position, laserSpawn.rotation);
             myTime = 0;
+            this.GetComponent<AudioSource>().Play();
         }
 	}
 }

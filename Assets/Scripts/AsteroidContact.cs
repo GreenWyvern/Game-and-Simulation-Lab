@@ -30,7 +30,7 @@ public class AsteroidContact : MonoBehaviour {
         {
             return;
         }
-        Instantiate(explosion, this.transform.position, this.transform.rotation);
+        
 
         if(other.tag == "Player")
         {
@@ -46,6 +46,7 @@ public class AsteroidContact : MonoBehaviour {
         if(other.tag != "Asteroid") { 
         Destroy(this.gameObject);
         Destroy(other.gameObject);
+        Instantiate(explosion, this.transform.position, this.transform.rotation);
         }
     }
 
